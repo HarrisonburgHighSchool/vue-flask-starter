@@ -2,27 +2,30 @@
   <div class="home">
     <img alt="Vue logo" src="../assets/logo.png" />
     <b-button v-on:click="get()">Click Me to Send API Request</b-button>
-    <HelloWorld msg="Welcome to Your Vue.js App" />
+    {{message}}
   </div>
 </template>
 
 <script>
 // @ is an alias to /src
-import HelloWorld from "@/components/HelloWorld.vue";
 import axios from "axios"
 
 const URL = "http://127.0.0.1:5000"
 
 export default {
   name: "Home",
-  components: {
-    HelloWorld
+  data() {
+    return {
+      message: "Hello"
+    }
   },
   methods: {
     get: function () {
-      axios
-      .get(URL + "/api/v1.0/hello")
-      .then(response => (console.log(response)))
+      axios.get(URL + "/api/v1.0/hello")
+      .then(response => {
+        this.message = response.data.name;
+        console.log(response)
+      })
     }
   }
 };
